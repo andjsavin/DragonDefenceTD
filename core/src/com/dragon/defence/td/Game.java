@@ -11,6 +11,7 @@ public class Game extends ApplicationAdapter{
 	SpriteBatch batch;
 	MainScreen ms;
 	BitmapFont font;
+	Boolean[] screens = new Boolean[41];
 
 	
 	@Override
@@ -20,6 +21,10 @@ public class Game extends ApplicationAdapter{
 				Gdx.files.internal("font.png"), false),
 				new BitmapFont(Gdx.files.internal("font2.fnt"),
 						Gdx.files.internal("font2.png"), false));
+		screens[0] = true;
+		for (int i = 1; i < 41; i++) {
+			screens[i] = false;
+		}
 	}
 
 	@Override
@@ -27,7 +32,7 @@ public class Game extends ApplicationAdapter{
 		ScreenUtils.clear(1, 1, 1, 1);
 		batch.begin();
 
-		ms.draw(batch);
+		if (screens[0]) ms.draw(batch);
 
 		batch.end();
 	}
