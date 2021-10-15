@@ -51,7 +51,7 @@ public class MainScreen implements IFont, InputProcessor {
     }
 
     public void draw(SpriteBatch batch) {
-        batch.draw(background, 0, 0, Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
+        batch.draw(background, 0, -1, Gdx.graphics.getWidth(), Gdx.graphics.getHeight() + 1);
         bigDragon.draw(batch);
         drawFont("Dragon", batch, font, 1.0f, Gdx.graphics.getWidth()*0.5f, Gdx.graphics.getHeight()*0.9f);
         drawFont("Defence", batch, font, 1.0f, Gdx.graphics.getWidth()*0.5f, Gdx.graphics.getHeight()*0.65f);
