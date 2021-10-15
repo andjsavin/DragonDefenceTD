@@ -46,16 +46,18 @@ public class MainScreen implements IFont, InputProcessor {
                 ),
                 "Choose level", font2, 0.2f);
         bigDragon = new BigDragon();
+        background = new Texture("bg.png");
         Gdx.input.setInputProcessor(this);
     }
 
     public void draw(SpriteBatch batch) {
+        batch.draw(background, 0, 0, Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
+        bigDragon.draw(batch);
         drawFont("Dragon", batch, font, 1.0f, Gdx.graphics.getWidth()*0.5f, Gdx.graphics.getHeight()*0.9f);
         drawFont("Defence", batch, font, 1.0f, Gdx.graphics.getWidth()*0.5f, Gdx.graphics.getHeight()*0.65f);
         newGameButton.draw(batch);
         settingsButton.draw(batch);
         chooseButton.draw(batch);
-        bigDragon.draw(batch);
     }
 
     public void dispose() {
