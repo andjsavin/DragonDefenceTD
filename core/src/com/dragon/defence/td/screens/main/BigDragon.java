@@ -48,7 +48,7 @@ public class BigDragon {
         else if (rect.x < -rect.width) state = 1;
         batch.draw(t[cur], rect.x, rect.y, rect.width, rect.height);
         rect.x += Gdx.graphics.getDeltaTime()*velocity*state;
-        if (fps % 10 == 0) cur++;
+        if (fps % 7 == 0) cur++;
         fps++;
     }
 

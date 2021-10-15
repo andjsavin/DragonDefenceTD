@@ -2,6 +2,8 @@ package com.dragon.defence.td.screens.main;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.InputProcessor;
+import com.badlogic.gdx.audio.Music;
+import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
@@ -14,6 +16,9 @@ public class MainScreen implements IFont, InputProcessor {
     BitmapFont font, font2;
     Button newGameButton, settingsButton, chooseButton;
     BigDragon bigDragon;
+    Music bigDragonFlap;
+    long flapId;
+    boolean flapping = false;
 
     public MainScreen(BitmapFont f1, BitmapFont f2) {
         font = f1;
@@ -47,6 +52,9 @@ public class MainScreen implements IFont, InputProcessor {
                 "Choose level", font2, 0.2f);
         bigDragon = new BigDragon();
         background = new Texture("bg.png");
+        bigDragonFlap = Gdx.audio.newMusic(Gdx.files.internal("sounds/big_dragon_wing_flap.wav"));
+        bigDragonFlap.setLooping(true);
+        bigDragonFlap.play();
         Gdx.input.setInputProcessor(this);
     }
 
