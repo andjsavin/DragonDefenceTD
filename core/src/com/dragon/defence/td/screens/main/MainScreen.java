@@ -24,6 +24,7 @@ public class MainScreen implements IFont, InputProcessor {
     Preferences settingsPrefs;
     Preferences progressPrefs;
     SettingsView sv;
+    ChooseLevelView cv;
 
     public MainScreen(BitmapFont f1, BitmapFont f2) {
         font = f1;
@@ -81,6 +82,7 @@ public class MainScreen implements IFont, InputProcessor {
             chooseButton.draw(batch);
         }
         if (settings) sv.draw(batch);
+        if (chooseLevel) cv.draw(batch);
     }
 
     public void dispose() {
@@ -138,6 +140,24 @@ public class MainScreen implements IFont, InputProcessor {
                 settingsPrefs.flush();
             }
         }
+        if (chooseLevel) {
+            cv.backButton.setState(cv.backButton.getR().contains(screenX, Gdx.graphics.getHeight() - screenY));
+            if (cv.curPage != 6) {
+                for (int i = 0; i < 6; i++) {
+                    cv.levelButtons[6*cv.curPage + i].setState(cv.levelButtons[6*cv.curPage + i].getR().contains(screenX, Gdx.graphics.getHeight() - screenY));
+                }
+            } else {
+                for (int i = 0; i < 5; i++) {
+                    cv.levelButtons[6*cv.curPage + i].setState(cv.levelButtons[6*cv.curPage + i].getR().contains(screenX, Gdx.graphics.getHeight() - screenY));
+                }
+            }
+            if (cv.curPage < 6 && cv.right.contains(screenX, Gdx.graphics.getHeight() - screenY)) {
+                cv.curPage++;
+            }
+            if (cv.curPage > 0 && cv.left.contains(screenX, Gdx.graphics.getHeight() - screenY)) {
+                cv.curPage--;
+            }
+        }
         return false;
     }
 
@@ -153,6 +173,11 @@ public class MainScreen implements IFont, InputProcessor {
             settings = true;
             bigDragonFlap.stop();
         }
+        if (chooseButton.getR().contains(screenX, Gdx.graphics.getHeight() - screenY) && !settings && !chooseLevel) {
+            cv = new ChooseLevelView(font2);
+            chooseLevel = true;
+            bigDragonFlap.stop();
+        }
         if (settings) {
             if (sv.sliderTouched) {
                 sv.sliderTouched = false;
@@ -166,6 +191,16 @@ public class MainScreen implements IFont, InputProcessor {
                 bigDragonFlap.play();
                 sv.dispose();
                 settings = false;
+                sv = null;
+            }
+        }
+        if (chooseLevel) {
+            if (cv.backButton.getR().contains(screenX, Gdx.graphics.getHeight() - screenY)) {
+                bigDragonFlap.setVolume(settingsPrefs.getFloat("sound", 1.0f));
+                bigDragonFlap.play();
+                cv.dispose();
+                chooseLevel = false;
+                cv = null;
             }
         }
         return true;
@@ -180,6 +215,18 @@ public class MainScreen implements IFont, InputProcessor {
             sv.backButton.setState(sv.backButton.getR().contains(screenX, Gdx.graphics.getHeight() - screenY));
             if (sv.sliderTouched && screenX <= sv.r.x + sv.r.width*0.825f && screenX >= sv.r.x + sv.r.width*0.425f)
                 sv.slider.x = screenX;
+        }
+        if (chooseLevel) {
+            cv.backButton.setState(cv.backButton.getR().contains(screenX, Gdx.graphics.getHeight() - screenY));
+            if (cv.curPage != 6) {
+                for (int i = 0; i < 6; i++) {
+                    cv.levelButtons[6*cv.curPage + i].setState(cv.levelButtons[6*cv.curPage + i].getR().contains(screenX, Gdx.graphics.getHeight() - screenY));
+                }
+            } else {
+                for (int i = 0; i < 5; i++) {
+                    cv.levelButtons[6*cv.curPage + i].setState(cv.levelButtons[6*cv.curPage + i].getR().contains(screenX, Gdx.graphics.getHeight() - screenY));
+                }
+            }
         }
         return true;
     }
