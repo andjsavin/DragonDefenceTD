@@ -87,4 +87,12 @@ public class SettingsView implements IFont {
         if (h) batch.draw(checked, hard.x, hard.y, hard.width, hard.height);
         else batch.draw(unchecked, hard.x, hard.y, hard.width, hard.height);
     }
+
+    public void dispose() {
+        soundBarTexture.dispose();
+        soundSliderTexture.dispose();
+        unchecked.dispose();
+        bg.dispose();
+        checked.dispose();
+    }
 }

@@ -1,6 +1,7 @@
 package com.dragon.defence.td.screens.main;
 
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.Input;
 import com.badlogic.gdx.InputProcessor;
 import com.badlogic.gdx.Preferences;
 import com.badlogic.gdx.audio.Music;
@@ -21,11 +22,16 @@ public class MainScreen implements IFont, InputProcessor {
     boolean settings = false, chooseLevel = false;
     float sound = 1.0f;
     Preferences settingsPrefs;
+    Preferences progressPrefs;
     SettingsView sv;
 
     public MainScreen(BitmapFont f1, BitmapFont f2) {
         font = f1;
         font2 = f2;
+        progressPrefs = Gdx.app.getPreferences("Progress");
+        int currentLevel = progressPrefs.getInteger("Current", 0);
+        String gameText = "New Game";
+        if (currentLevel > 0) gameText = "Continue";
         newGameButton = new Button(new Texture("default_button.png"),
                 new Texture("pressed_button.png"),
                 new Rectangle(
@@ -34,7 +40,7 @@ public class MainScreen implements IFont, InputProcessor {
                         Gdx.graphics.getWidth()*0.3f,
                         Gdx.graphics.getWidth()*0.1f
                 ),
-                "New Game", font2, 0.2f);
+                gameText, font2, 0.2f);
         settingsButton = new Button(new Texture("default_button.png"),
                 new Texture("pressed_button.png"),
                 new Rectangle(
@@ -60,8 +66,8 @@ public class MainScreen implements IFont, InputProcessor {
         bigDragonFlap.setLooping(true);
         bigDragonFlap.setVolume(settingsPrefs.getFloat("sound", 1.0f));
         bigDragonFlap.play();
-        sv = new SettingsView(font2);
         Gdx.input.setInputProcessor(this);
+        Gdx.input.setCatchKey(Input.Keys.BACK, true);
     }
 
     public void draw(SpriteBatch batch) {
@@ -81,14 +87,15 @@ public class MainScreen implements IFont, InputProcessor {
         newGameButton.dispose();
         settingsButton.dispose();
         chooseButton.dispose();
-        font.dispose();
         background.dispose();
         bigDragonFlap.dispose();
     }
 
     @Override
     public boolean keyDown(int keycode) {
-        return false;
+        if (keycode == Input.Keys.BACK) {
+        }
+        return true;
     }
 
     @Override
@@ -140,6 +147,9 @@ public class MainScreen implements IFont, InputProcessor {
         settingsButton.setState(false);
         chooseButton.setState(false);
         if (settingsButton.getR().contains(screenX, Gdx.graphics.getHeight() - screenY) && !settings && !chooseLevel) {
+            sv = new SettingsView(font2);
+            sv.slider.x = settingsPrefs.getFloat("sound", 1.0f)*sv.r.width*0.4f -
+                    sv.slider.width*0.5f + sv.r.x + sv.r.width*0.425f;
             settings = true;
             bigDragonFlap.stop();
         }
@@ -154,6 +164,7 @@ public class MainScreen implements IFont, InputProcessor {
             if (sv.backButton.getR().contains(screenX, Gdx.graphics.getHeight() - screenY)) {
                 bigDragonFlap.setVolume(settingsPrefs.getFloat("sound", 1.0f));
                 bigDragonFlap.play();
+                sv.dispose();
                 settings = false;
             }
         }

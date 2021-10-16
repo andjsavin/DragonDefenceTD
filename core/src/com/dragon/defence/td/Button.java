@@ -43,6 +43,5 @@ public class Button implements IFont {
         textureDefault.dispose();
         texturePressed.dispose();
         texture.dispose();
-        f.dispose();
     }
 }
