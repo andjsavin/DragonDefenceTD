@@ -25,24 +25,24 @@ public class ChooseLevelView implements IFont {
         bg = new Texture("settings_bg.png");
         lock = new Texture("lock.png");
         font = f;
-        r = new Rectangle(Gdx.graphics.getWidth()*0.15f,
-                Gdx.graphics.getHeight()*0.15f,
-                Gdx.graphics.getWidth()*0.7f,
-                Gdx.graphics.getHeight()*0.7f);
+        r = new Rectangle(Gdx.graphics.getWidth() * 0.15f,
+                Gdx.graphics.getHeight() * 0.15f,
+                Gdx.graphics.getWidth() * 0.7f,
+                Gdx.graphics.getHeight() * 0.7f);
         backButton = new Button(new Texture("default_button.png"),
                 new Texture("pressed_button.png"),
                 new Rectangle(
-                        r.x + r.width*0.395f,
-                        r.y + r.height*0.15f,
-                        r.width*0.21f,
-                        r.width*0.07f
+                        r.x + r.width * 0.395f,
+                        r.y + r.height * 0.15f,
+                        r.width * 0.21f,
+                        r.width * 0.07f
                 ), "Back", font, 0.2f);
         leftTexture = new Texture("left_arrow.png");
         rightTexture = new Texture("right_arrow.png");
-        left = new Rectangle(r.x + r.width*0.15f,
-                r.y + r.height*0.15f, r.width*0.14f, r.width*0.07f);
-        right = new Rectangle(r.x + r.width*0.71f,
-                r.y + r.height*0.15f, r.width*0.14f, r.width*0.07f);
+        left = new Rectangle(r.x + r.width * 0.15f,
+                r.y + r.height * 0.15f, r.width * 0.14f, r.width * 0.07f);
+        right = new Rectangle(r.x + r.width * 0.71f,
+                r.y + r.height * 0.15f, r.width * 0.14f, r.width * 0.07f);
         levelButtons = new Button[41];
         int counter = 0;
         for (int i = 0; i < 7; i++) {
@@ -53,10 +53,10 @@ public class ChooseLevelView implements IFont {
                     levelButtons[counter - 1] = new Button(new Texture("default_button.png"),
                             new Texture("pressed_button.png"),
                             new Rectangle(
-                                    r.x + r.width*0.1f + k*r.width*0.28f,
-                                    r.y + r.height*0.8f - r.width*0.1f - j*r.width*0.08f,
-                                    r.width*0.24f,
-                                    r.width*0.08f
+                                    r.x + r.width * 0.1f + k * r.width * 0.28f,
+                                    r.y + r.height * 0.8f - r.width * 0.1f - j * r.width * 0.08f,
+                                    r.width * 0.24f,
+                                    r.width * 0.08f
                             ), "Level " + counter, font, 0.2f);
                 }
             }
@@ -70,21 +70,21 @@ public class ChooseLevelView implements IFont {
         if (curPage != 6) {
             for (int i = 0; i < 6; i++) {
                 levelButtons[6 * curPage + i].draw(batch);
-                if (6*curPage + i + 1 > curLevel) {
+                if (6 * curPage + i + 1 > curLevel) {
                     batch.draw(lock,
-                            levelButtons[6 * curPage + i].getR().x + levelButtons[6 * curPage + i].getR().width*0.5f - r.width*0.018f,
-                            levelButtons[6 * curPage + i].getR().y + levelButtons[6 * curPage + i].getR().height*0.5f - r.width*0.018f*50f/37f,
-                            r.width*0.036f, r.width*0.036f*50f/37f);
+                            levelButtons[6 * curPage + i].getR().x + levelButtons[6 * curPage + i].getR().width * 0.5f - r.width * 0.018f,
+                            levelButtons[6 * curPage + i].getR().y + levelButtons[6 * curPage + i].getR().height * 0.5f - r.width * 0.018f * 50f / 37f,
+                            r.width * 0.036f, r.width * 0.036f * 50f / 37f);
                 }
             }
         } else {
             for (int i = 0; i < 5; i++) {
                 levelButtons[6 * curPage + i].draw(batch);
-                if (6*curPage + i + 1> curLevel) {
+                if (6 * curPage + i + 1 > curLevel) {
                     batch.draw(lock,
-                            levelButtons[6 * curPage + i].getR().x + levelButtons[6 * curPage + i].getR().width*0.5f - r.width*0.018f,
-                            levelButtons[6 * curPage + i].getR().y + levelButtons[6 * curPage + i].getR().height*0.5f - r.width*0.018f*50f/37f,
-                            r.width*0.036f, r.width*0.036f*50f/37f);
+                            levelButtons[6 * curPage + i].getR().x + levelButtons[6 * curPage + i].getR().width * 0.5f - r.width * 0.018f,
+                            levelButtons[6 * curPage + i].getR().y + levelButtons[6 * curPage + i].getR().height * 0.5f - r.width * 0.018f * 50f / 37f,
+                            r.width * 0.036f, r.width * 0.036f * 50f / 37f);
                 }
             }
         }

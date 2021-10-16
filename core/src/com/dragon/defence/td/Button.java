@@ -31,7 +31,7 @@ public class Button implements IFont {
 
     public void draw(SpriteBatch batch) {
         batch.draw(texture, r.x, r.y, r.width, r.height);
-        drawFont(s, batch, f, scl, r.x + r.width*0.5f, r.y + r.height*0.5f);
+        drawFont(s, batch, f, scl, r.x + r.width * 0.5f, r.y + r.height * 0.5f);
     }
 
     public void setState(boolean s) {

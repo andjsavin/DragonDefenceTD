@@ -36,28 +36,28 @@ public class MainScreen implements IFont, InputProcessor {
         newGameButton = new Button(new Texture("default_button.png"),
                 new Texture("pressed_button.png"),
                 new Rectangle(
-                        Gdx.graphics.getWidth()*0.03f,
-                        Gdx.graphics.getHeight()*0.1f,
-                        Gdx.graphics.getWidth()*0.3f,
-                        Gdx.graphics.getWidth()*0.1f
+                        Gdx.graphics.getWidth() * 0.03f,
+                        Gdx.graphics.getHeight() * 0.1f,
+                        Gdx.graphics.getWidth() * 0.3f,
+                        Gdx.graphics.getWidth() * 0.1f
                 ),
                 gameText, font2, 0.2f);
         settingsButton = new Button(new Texture("default_button.png"),
                 new Texture("pressed_button.png"),
                 new Rectangle(
-                        Gdx.graphics.getWidth()*0.35f,
-                        Gdx.graphics.getHeight()*0.1f,
-                        Gdx.graphics.getWidth()*0.3f,
-                        Gdx.graphics.getWidth()*0.1f
+                        Gdx.graphics.getWidth() * 0.35f,
+                        Gdx.graphics.getHeight() * 0.1f,
+                        Gdx.graphics.getWidth() * 0.3f,
+                        Gdx.graphics.getWidth() * 0.1f
                 ),
                 "Settings", font2, 0.2f);
         chooseButton = new Button(new Texture("default_button.png"),
                 new Texture("pressed_button.png"),
                 new Rectangle(
-                        Gdx.graphics.getWidth()*0.67f,
-                        Gdx.graphics.getHeight()*0.1f,
-                        Gdx.graphics.getWidth()*0.3f,
-                        Gdx.graphics.getWidth()*0.1f
+                        Gdx.graphics.getWidth() * 0.67f,
+                        Gdx.graphics.getHeight() * 0.1f,
+                        Gdx.graphics.getWidth() * 0.3f,
+                        Gdx.graphics.getWidth() * 0.1f
                 ),
                 "Choose level", font2, 0.2f);
         bigDragon = new BigDragon();
@@ -117,7 +117,8 @@ public class MainScreen implements IFont, InputProcessor {
         chooseButton.setState(chooseButton.getR().contains(screenX, Gdx.graphics.getHeight() - screenY));
         if (settings) {
             sv.backButton.setState(sv.backButton.getR().contains(screenX, Gdx.graphics.getHeight() - screenY));
-            if (sv.slider.contains(screenX, Gdx.graphics.getHeight() - screenY)) sv.sliderTouched = true;
+            if (sv.slider.contains(screenX, Gdx.graphics.getHeight() - screenY))
+                sv.sliderTouched = true;
             if (sv.easy.contains(screenX, Gdx.graphics.getHeight() - screenY)) {
                 sv.e = true;
                 sv.m = false;
@@ -144,11 +145,11 @@ public class MainScreen implements IFont, InputProcessor {
             cv.backButton.setState(cv.backButton.getR().contains(screenX, Gdx.graphics.getHeight() - screenY));
             if (cv.curPage != 6) {
                 for (int i = 0; i < 6; i++) {
-                    cv.levelButtons[6*cv.curPage + i].setState(cv.levelButtons[6*cv.curPage + i].getR().contains(screenX, Gdx.graphics.getHeight() - screenY));
+                    cv.levelButtons[6 * cv.curPage + i].setState(cv.levelButtons[6 * cv.curPage + i].getR().contains(screenX, Gdx.graphics.getHeight() - screenY));
                 }
             } else {
                 for (int i = 0; i < 5; i++) {
-                    cv.levelButtons[6*cv.curPage + i].setState(cv.levelButtons[6*cv.curPage + i].getR().contains(screenX, Gdx.graphics.getHeight() - screenY));
+                    cv.levelButtons[6 * cv.curPage + i].setState(cv.levelButtons[6 * cv.curPage + i].getR().contains(screenX, Gdx.graphics.getHeight() - screenY));
                 }
             }
             if (cv.curPage < 6 && cv.right.contains(screenX, Gdx.graphics.getHeight() - screenY)) {
@@ -168,8 +169,8 @@ public class MainScreen implements IFont, InputProcessor {
         chooseButton.setState(false);
         if (settingsButton.getR().contains(screenX, Gdx.graphics.getHeight() - screenY) && !settings && !chooseLevel) {
             sv = new SettingsView(font2);
-            sv.slider.x = settingsPrefs.getFloat("sound", 1.0f)*sv.r.width*0.4f -
-                    sv.slider.width*0.5f + sv.r.x + sv.r.width*0.425f;
+            sv.slider.x = settingsPrefs.getFloat("sound", 1.0f) * sv.r.width * 0.4f -
+                    sv.slider.width * 0.5f + sv.r.x + sv.r.width * 0.425f;
             settings = true;
             bigDragonFlap.stop();
         }
@@ -178,10 +179,16 @@ public class MainScreen implements IFont, InputProcessor {
             chooseLevel = true;
             bigDragonFlap.stop();
         }
+        if (newGameButton.getR().contains(screenX, Gdx.graphics.getHeight() - screenY) && !settings && !chooseLevel) {
+            progressPrefs.putBoolean("Main Menu", false);
+            progressPrefs.flush();
+            bigDragonFlap.stop();
+            dispose();
+        }
         if (settings) {
             if (sv.sliderTouched) {
                 sv.sliderTouched = false;
-                float vol = (sv.slider.x + sv.slider.width*0.5f - sv.r.x - sv.r.width*0.425f)/(sv.r.width*0.4f);
+                float vol = (sv.slider.x + sv.slider.width * 0.5f - sv.r.x - sv.r.width * 0.425f) / (sv.r.width * 0.4f);
                 if (vol > 1) vol = 1f;
                 settingsPrefs.putFloat("sound", vol);
                 settingsPrefs.flush();
@@ -213,18 +220,18 @@ public class MainScreen implements IFont, InputProcessor {
         chooseButton.setState(chooseButton.getR().contains(screenX, Gdx.graphics.getHeight() - screenY));
         if (settings) {
             sv.backButton.setState(sv.backButton.getR().contains(screenX, Gdx.graphics.getHeight() - screenY));
-            if (sv.sliderTouched && screenX <= sv.r.x + sv.r.width*0.825f && screenX >= sv.r.x + sv.r.width*0.425f)
+            if (sv.sliderTouched && screenX <= sv.r.x + sv.r.width * 0.825f && screenX >= sv.r.x + sv.r.width * 0.425f)
                 sv.slider.x = screenX;
         }
         if (chooseLevel) {
             cv.backButton.setState(cv.backButton.getR().contains(screenX, Gdx.graphics.getHeight() - screenY));
             if (cv.curPage != 6) {
                 for (int i = 0; i < 6; i++) {
-                    cv.levelButtons[6*cv.curPage + i].setState(cv.levelButtons[6*cv.curPage + i].getR().contains(screenX, Gdx.graphics.getHeight() - screenY));
+                    cv.levelButtons[6 * cv.curPage + i].setState(cv.levelButtons[6 * cv.curPage + i].getR().contains(screenX, Gdx.graphics.getHeight() - screenY));
                 }
             } else {
                 for (int i = 0; i < 5; i++) {
-                    cv.levelButtons[6*cv.curPage + i].setState(cv.levelButtons[6*cv.curPage + i].getR().contains(screenX, Gdx.graphics.getHeight() - screenY));
+                    cv.levelButtons[6 * cv.curPage + i].setState(cv.levelButtons[6 * cv.curPage + i].getR().contains(screenX, Gdx.graphics.getHeight() - screenY));
                 }
             }
         }

@@ -2,43 +2,48 @@ package com.dragon.defence.td;
 
 import com.badlogic.gdx.ApplicationAdapter;
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.Preferences;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.utils.ScreenUtils;
 import com.dragon.defence.td.screens.main.MainScreen;
 
-public class Game extends ApplicationAdapter{
-	SpriteBatch batch;
-	MainScreen ms;
-	BitmapFont font;
-	Boolean[] screens = new Boolean[41];
+public class Game extends ApplicationAdapter {
+    SpriteBatch batch;
+    MainScreen ms;
+    Preferences progressPrefs;
 
-	
-	@Override
-	public void create () {
-		batch = new SpriteBatch();
-		ms = new MainScreen(new BitmapFont(Gdx.files.internal("font.fnt"),
-				Gdx.files.internal("font.png"), false),
-				new BitmapFont(Gdx.files.internal("font2.fnt"),
-						Gdx.files.internal("font2.png"), false));
-		screens[0] = true;
-		for (int i = 1; i < 41; i++) {
-			screens[i] = false;
-		}
-	}
 
-	@Override
-	public void render () {
-		ScreenUtils.clear(1, 1, 1, 1);
-		batch.begin();
+    @Override
+    public void create() {
+        batch = new SpriteBatch();
+        progressPrefs = Gdx.app.getPreferences("Progress");
+        ms = new MainScreen(new BitmapFont(Gdx.files.internal("font.fnt"),
+                Gdx.files.internal("font.png"), false),
+                new BitmapFont(Gdx.files.internal("font2.fnt"),
+                        Gdx.files.internal("font2.png"), false));
+        progressPrefs.putBoolean("Main Menu", true);
+        for (int i = 1; i < 42; i++) {
+            progressPrefs.putBoolean("Level" + i, false);
+        }
+        progressPrefs.flush();
+    }
 
-		if (screens[0]) ms.draw(batch);
+    @Override
+    public void render() {
+        ScreenUtils.clear(1, 1, 1, 1);
+        batch.begin();
 
-		batch.end();
-	}
-	
-	@Override
-	public void dispose () {
-		batch.dispose();
-	}
+        if (progressPrefs.getBoolean("Main Menu", true)) ms.draw(batch);
+        for (int i = 1; i < 42; i++) {
+            if (progressPrefs.getBoolean("Level" + i, false)) ms.draw(batch);
+        }
+
+        batch.end();
+    }
+
+    @Override
+    public void dispose() {
+        batch.dispose();
+    }
 }
